@@ -1,0 +1,3 @@
+If you are installing pycddlib for Anaconda, you might need to install gcc_linux-64 and gxx_linux-64 as follows:
+
+conda install gcc_linux-64 gxx_linux-64
