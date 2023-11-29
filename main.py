@@ -2,6 +2,7 @@ from scipy.linalg import lu
 from scipy.sparse import csr_matrix
 import numpy as np
 from itertools import product
+import cvxpy as cp
 import cdd
 
 #======================================================================#
@@ -104,9 +105,9 @@ def hilbert_to_gpt(states, effects):
     basis = gellmann_basis(d)
     to_gellmann = lambda O: np.array([(O@b).trace() for b in basis[::-1]])
     return np.array([to_gellmann(o) for o in states]).T.real,\
-           np.array([to_gellmann(o) for o in effects]).real,\
-                     to_gellmann(np.eye(d)).real,\
-                     to_gellmann(np.eye(d)/d).real
+           np.array([to_gellmann(o) for o in effects]).T.real,\
+                     to_gellmann(np.eye(d)).T.real,\
+                     to_gellmann(np.eye(d)/d).T.real
 
 #...........B2. Characterising the accessible fragment...........#
 
@@ -120,8 +121,8 @@ def accessibleGPT(X):
     r = len(np.unique(csr_matrix(U).indptr))-1 
     #r counts how many row pointers in U (upper-triangular component)
     #are different, and picks the largest one. -1 fixes counting issues
-    Inc = REF[:r,:]
-    Proj = np.linalg.pinv(Inc).T
+    Inc = REF[:r,:].T
+    Proj = np.linalg.pinv(Inc)
     return Inc, Proj, Proj@X
 
 #.......... B3. Characterising state cone facets.................#
@@ -135,6 +136,41 @@ def dualize_effects(E):
         C = cdd.Matrix(E.T, number_type="float")
         C.rep_type = cdd.RepType.INEQUALITY
         return np.array(cdd.Polyhedron(C).get_generators())
+    
+
+#================================================================#
+#======================== C- MAIN CODE ==========================#
+#================================================================#
+
+def simplicial_embedding(H_S, H_E, Id, D):
+    p_, Phi_ = cp.Variable(nonneg=True),\
+               cp.Variable(shape=(H_E.shape[0], H_S.shape[0]), nonneg=True)
+    problem = cp.Problem(cp.Minimize(p_),\
+               [p_*D + (1-p_)*Id - H_E.T @ Phi_ @ H_S == 0])
+    problem.solve()
+    return p_.value, Phi_.value
+
+def find_embedding(states, effects, unit, mms):
+    IncS, ProjS, SA = accessibleGPT(states)
+    IncE, ProjE, EA = accessibleGPT(effects)
+    u = ProjE @ unit
+    mu = ProjS @ mms
+    
+    HS = dualize_states(SA)
+    HE = dualize_effects(EA).T
+    Id = accessibleGPT(effects)[0].T @ accessibleGPT(states)[0]
+    D = np.outer(u,mu)
+    p, Phi = simplicial_embedding(HS, HE, Id, D)
+
+   # tauE = accessibleGPT(effects)[0].T @ H_E @ Phi
+   # tauS = H_S @ accessibleGPT(states)[0]
+   # sigmaS = np.array([tauS[i,:]*(u @ tauE[:,i]) for i in range(tauS.shape[0])\
+   #               if not np.isclose((u @ tauE[:,i]),0)])
+   # sigmaE = np.array([tauE[:,i]/(u @ tauE[:,i]) for i in range(tauE.shape[1])\
+   #               if not np.isclose((u @ tauE[:,i]),0)]).T
+
+   # PE, PS = effects @ sigmaE, sigmaS @ states
+    return p, Phi#PE, PS
                      
 
 #================================================================#
