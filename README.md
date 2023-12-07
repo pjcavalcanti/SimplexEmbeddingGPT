@@ -1,4 +1,4 @@
-# Generalized Probabilistic Theory (GPT) Fragment Analysis
+# Simplex Embedding for Generalised Probabilistic Theory (GPT) Fragments
 
 This repository contains a Python code that finds a simplex embedding for a (possibly depolarised) generalised probabilistic theory (GPT) fragment, which was originally developed in <https://arxiv.org/abs/2204.11905> as a Linear Program implemented in Mathematica.
 
