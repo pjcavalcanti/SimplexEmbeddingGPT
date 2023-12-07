@@ -50,7 +50,7 @@ import examples
 
 states, effects, unit, mms = example1()
 result = SimplexEmbedding(states, effects, unit, mms)
-print(print(f"Result: Robustness of contextuality (r) = {result[0]}, Epistemic States (μ) = {result[1]}, Response Functions (ξ) = {result[2]}"))
+print("Result: Robustness of contextuality (r) = {result[0]}, Epistemic States (μ) = {result[1]}, Response Functions (ξ) = {result[2]}")
 ```
 
 In this example, the printed output should be an array with a number `r`, which in the case of example 1 is equal to 0; a list `μ` of 4-dimensional vectors representing the epistemic states, and a list `ξ` of 4-dimensional vectors representing the response functions. 
