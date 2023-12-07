@@ -3,12 +3,12 @@
 This repository contains a Python code that finds a simplex embedding for a (possibly depolarised) generalised probabilistic theory (GPT) fragment, which was originally developed in <https://arxiv.org/abs/2204.11905> as a Linear Program implemented in Mathematica.
 
 ## Table of Contents
-Introduction
-Installation
-Usage
-Acknowledgements
-Contributing
-License
+- Introduction
+- Installation
+- Usage
+- Acknowledgements
+- Contributing
+- License
 
 ## Introduction
 
