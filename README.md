@@ -79,7 +79,7 @@ In this example, the printed output should be an array with a number `r`, which 
 
 ## Acknowledgements
 
-Some functions in this repository are inspired on the work of Jonathan Gross, Stelios Sfakianakis, and Mathew Weiss, who we hereby acknowledge.
+This project was funded by the Program for Young Leaders of UG Research Groups - IDUB junG of the University of Gdańsk. Some functions in this repository are inspired on the work of Jonathan Gross, Stelios Sfakianakis, and Mathew Weiss, who we hereby acknowledge.
 
 ## Contributing
 
