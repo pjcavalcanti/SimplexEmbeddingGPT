@@ -12,7 +12,7 @@ def DefineAccessibleGPTFragment(statesOrEffects):
     Uses the Reduced Row Echelon Form (RREF) of the matrix of states/effects to construct the inclusion map (RREF without the kernel)
     and projection (pseudo inverse of the inclusion), and the set of states/effects represented in the accessible fragment.
 
-    Parameters:
+    Args:
     statesOrEffects (np.ndarray): A numpy array representing states or effects. Should be a 2D array.
         shape = (gpt fragment dimension, number of states or effects)
 
@@ -44,7 +44,7 @@ def SimplicialConeEmbedding(H_S, H_E, accessibleFramentBornRule, depolarizingMap
     given the GPT's state and effect cone facets, the bilinear form giving the Born rule in
     the accessible fragment, and its depolarizing map.
 
-    Parameters:
+    Args:
     H_S (np.ndarray): A numpy array representing the state cone facets.
         shape = (number of state cone facets, dimension of states in the GPT accessible fragment)
         
@@ -86,7 +86,7 @@ def SimplexEmbedding(states, effects, unit, mms, debug=False):
     Tests whether a simplex embedding exists given the GPT's states, effects, unit, and maximally mixed state.
     
 
-    Parameters:
+    Args:
     states (np.ndarray): A numpy array of states.
     effects (np.ndarray): A numpy array of effects.
     unit (np.ndarray): The unit effect.

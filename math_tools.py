@@ -3,8 +3,22 @@ import cdd
 
 
 def rref(B, tol=1e-8, debug=False):
-    # Provides the reduced row echelon form for matrix B
-    # ©Copyright 2017 Stelios Sfakianakis <https://gist.github.com/sgsfak/77a1c08ac8a9b0af77393b24e44c9547>
+    """
+    Provides the Reduced Row Echelon Form (RREF) of a given matrix B.
+    
+    Args: 
+    B (np.ndarray): The matrix to be transformed into RREF. Should be a 2D array.
+    tol (float, optional): A tolerance value to identify negligible elements. Defaults to 1e-8.
+    debug (bool, optional): If set to True, additional debugging information is printed. Defaults to False.
+
+    Returns:
+    np.ndarray: The RREF of the input matrix B.
+    
+    Copyright:
+    © Copyright 2017 Stelios Sfakianakis. Original code available at 
+    <https://gist.github.com/sgsfak/77a1c08ac8a9b0af77393b24e44c9547>    
+    """
+    
     A = B.copy()
     rows, cols = A.shape
     r = 0
