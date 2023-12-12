@@ -5,6 +5,7 @@ This repository contains a Python implementation that finds a simplex embedding 
 ## Table of Contents
 - Introduction
 - Installation
+- Troubleshooting
 - Usage
 - Acknowledgements
 - Contributing
