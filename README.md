@@ -34,7 +34,7 @@ git clone https://github.com/yourusername/your-repository.git
 Install dependencies:
 
 ```bash
-pip install numpy scipy cvxpy itertools
+pip install numpy scipy cvxpy itertools pycddlib
 ```
 
 Make sure to have the required dependencies installed before running the code.
