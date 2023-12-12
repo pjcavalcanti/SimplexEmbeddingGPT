@@ -28,7 +28,7 @@ The main functionality in this repository checks for the existence of a simplex 
 Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/your-repository.git
+git clone https://github.com/pjcavalcanti/SimplexEmbeddingGPT.git
 ```
 
 Install dependencies:
