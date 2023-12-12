@@ -91,7 +91,7 @@ def FindStateConeFacets(S):
 
     Args:
     - S (np.ndarray): A numpy array representing the states in the accessible GPT fragment.
-        shape = (GPT fragment dimension, number of states)
+        shape = (dimension of the space spanned by states in the accessible GPT fragment, number of states)
 
     Returns:
     np.ndarray:
@@ -110,7 +110,7 @@ def FindEffectConeFacets(E):
 
     Args:
     - E (np.ndarray): A numpy array representing the states in the accessible GPT fragment.
-        shape = (GPT fragment dimension, number of effects)
+        shape = (dimension of the space spanned by effects in the accessible GPT fragment, number of effects)
 
     Returns:
     np.ndarray:
