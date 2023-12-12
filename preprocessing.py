@@ -64,7 +64,7 @@ def fromListOfMatrixToListOfVectors(states, effects):
     Converts inputs from density operator/POVM representation to GPT representation.
 
     This function uses the Gell-Mann basis to represent quantum states and effects (measurements)
-    as column vectors, as is in the Generalized Probabilistic Theories (GPT) framework.
+    as column real vectors, as is in the Generalized Probabilistic Theories (GPT) framework.
 
     Args:
     states (list of np.ndarray): List of density matrices representing quantum states.

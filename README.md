@@ -1,6 +1,6 @@
 # Simplex Embedding for Generalised Probabilistic Theory (GPT) Fragments
 
-This repository contains a Python code that finds a simplex embedding for a (possibly depolarised) generalised probabilistic theory (GPT) fragment, which was originally developed in <https://arxiv.org/abs/2204.11905> as a Linear Program implemented in Mathematica.
+This repository contains a Python implementation that finds a simplex embedding for a (possibly depolarised) generalised probabilistic theory (GPT) fragment, which was originally developed in <https://arxiv.org/abs/2204.11905> as a Linear Program implemented in Mathematica.
 
 ## Table of Contents
 - Introduction
@@ -38,6 +38,18 @@ pip install numpy scipy cvxpy itertools
 
 Make sure to have the required dependencies installed before running the code.
 
+## Troubleshooting
+Installing pycddlib in Anaconda
+
+If you are using Anaconda and encounter issues when installing pycddlib, you may need to install additional compilers. This is particularly relevant if you are on a Linux system. To resolve this, install gcc_linux-64 and gxx_linux-64 using the following commands:
+
+```bash
+conda install gcc_linux-64 gxx_linux-64
+```
+
+This step ensures that the necessary C++ compilers are available in your Anaconda environment, allowing for the successful installation and functioning of pycddlib.
+
+
 ## Usage
 
 The main functionality of the code is encapsulated in the `SimplexEmbedding` function found in `simplexEmbedding.py`. This will take a set of states, a set of effects, a unit effect and a maximally mixed state **(necessarily in vector form)**, find the accessible GPT fragment representation for the states and effects with the `DefineAccessibleGPTFragment` function, characterise its cone facets, find the minimal amount of noise `r` necessary for a simplicial-cone embedding with the function `SimplicialConeEmbedding`, and compute a simplex embedding from the result and the respective sets of embedded states and effects, `μ` and `ξ`. The function outputs an array `(r,μ,ξ)`.
@@ -57,7 +69,7 @@ In this example, the printed output should be an array with a number `r`, which 
 
 ## Files
 
-`preprocessing.py`: contains functions to construct the Gell-Mann orthonormal basis of hermitian operators for a Hilbert space of any dimension, and convert states and inputs from the matricial representation to vector representation. **Calling the function `fromListOfMatrixToListOfVectors` is necessary whenever the input states and effects are represented by density operators and POVMs**. The main function of this repository will not run if the input states and effects are not in vector form.
+`preprocessing.py`: contains functions to construct the Gell-Mann orthonormal basis of hermitian operators for a Hilbert space of any dimension, and convert states and inputs from the matricial representation to vector representation. Example usage can be found in examples.py for a quantum type input. **Calling the function `fromListOfMatrixToListOfVectors` is necessary whenever the input states and effects are represented by density operators and POVMs**. The main function of this repository will not run if the input states and effects are not in vector form.
 
 `math_tools.py`: provides mathematical accessories necessary for the main linear program, such as a function `rref` finding the Reduced Row Echelon Form of a matrix in order to determine the dimension of the space spanned by the sets of states and effects in their accessible GPT fragment representation. The functions characterising the positive cone of states and effects are also specified, employing tools imported from the `pycdd` library.
 
