@@ -193,5 +193,5 @@ if __name__ == "__main__":
 
     np.set_printoptions(precision=2, suppress=True)
 
-    states, effects, unit, mms = quantum()
+    states, effects, unit, mms = example1()
     SimplexEmbedding(states, effects, unit, mms, debug=True)
