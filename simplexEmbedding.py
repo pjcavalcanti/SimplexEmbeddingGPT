@@ -38,7 +38,7 @@ def DefineAccessibleGPTFragment(statesOrEffects):
     return inclusionMap, projectionMap, projectionMap @ statesOrEffects
 
 
-def SimplicialConeEmbedding(H_S, H_E, accessibleFramentBornRule, depolarizingMap):
+def SimplicialConeEmbedding(H_S, H_E, accessibleFragmentBornRule, depolarizingMap):
     """
     Solves Linear Program 2 from the paper by testing whether a simplicial cone embedding exists
     given the GPT's state and effect cone facets, the bilinear form giving the Born rule in
@@ -51,7 +51,7 @@ def SimplicialConeEmbedding(H_S, H_E, accessibleFramentBornRule, depolarizingMap
     H_E (np.ndarray): A numpy array representing the effect cone facets.
         shape = (dimension of effects in the GPT accessible fragment, number of effect cone facets)
         
-    accessibleFramentBornRule (np.ndarray): The bilinear form giving the Born rule in the accessible fragment.
+    accessibleFragmentBornRule (np.ndarray): The bilinear form giving the Born rule in the accessible fragment.
         shape = (dimension of states in the GPT accessible fragment, dimension of effects in the GPT accessible fragment)
         
     depolarizingMap (np.ndarray): The depolarizing map, typically the outer product of accessible fragment unit and MMS.
@@ -70,7 +70,7 @@ def SimplicialConeEmbedding(H_S, H_E, accessibleFramentBornRule, depolarizingMap
         cp.Minimize(robustness),
         [
             robustness * depolarizingMap
-            + (1 - robustness) * accessibleFramentBornRule
+            + (1 - robustness) * accessibleFragmentBornRule
             - H_E @ sigma @ H_S
             == 0
         ],
@@ -100,24 +100,24 @@ def SimplexEmbedding(states, effects, unit, mms, debug=False):
         - EpistemicStates (np.ndarray): The epistemic states matrix.
     """
 
-    inclusion_S, projection_S, accessibleFramentStates = DefineAccessibleGPTFragment(
+    inclusion_S, projection_S, accessibleFragmentStates = DefineAccessibleGPTFragment(
         states
     )
-    inclusion_E, projection_E, accessibleFramentEffects = DefineAccessibleGPTFragment(
+    inclusion_E, projection_E, accessibleFragmentEffects = DefineAccessibleGPTFragment(
         effects
     )
-    accessibleFramentUnit = projection_E @ unit
+    accessibleFragmentUnit = projection_E @ unit
     # MMS: Maximally mixed state
-    accessibleFramentMMS = projection_S @ mms
+    accessibleFragmentMMS = projection_S @ mms
 
-    H_S = FindStateConeFacets(accessibleFramentStates)
-    H_E = FindEffectConeFacets(accessibleFramentEffects)
+    H_S = FindStateConeFacets(accessibleFragmentStates)
+    H_E = FindEffectConeFacets(accessibleFragmentEffects)
 
     # Bilinear form giving the Born rule in the accessible fragment:
-    accessibleFramentBornRule = inclusion_E.T @ inclusion_S
-    depolarizingMap = np.outer(accessibleFramentUnit, accessibleFramentMMS)
+    accessibleFragmentBornRule = inclusion_E.T @ inclusion_S
+    depolarizingMap = np.outer(accessibleFragmentUnit, accessibleFragmentMMS)
     robustness, sigma = SimplicialConeEmbedding(
-        H_S, H_E, accessibleFramentBornRule, depolarizingMap
+        H_S, H_E, accessibleFragmentBornRule, depolarizingMap
     )
 
     # Trivial factorization of the matrix sigma:
@@ -126,16 +126,16 @@ def SimplexEmbedding(states, effects, unit, mms, debug=False):
 
     tau_S = np.array(
         [
-            alpha[i, :] * (accessibleFramentUnit @ beta[:, i])
+            alpha[i, :] * (accessibleFragmentUnit @ beta[:, i])
             for i in range(alpha.shape[0])
-            if not np.isclose((accessibleFramentUnit @ beta[:, i]), 0)
+            if not np.isclose((accessibleFragmentUnit @ beta[:, i]), 0)
         ]
     )
     tau_E = np.array(
         [
-            beta[:, i] / (accessibleFramentUnit @ beta[:, i])
+            beta[:, i] / (accessibleFragmentUnit @ beta[:, i])
             for i in range(beta.shape[1])
-            if not np.isclose((accessibleFramentUnit @ beta[:, i]), 0)
+            if not np.isclose((accessibleFragmentUnit @ beta[:, i]), 0)
         ]
     ).T
 
@@ -150,7 +150,7 @@ def SimplexEmbedding(states, effects, unit, mms, debug=False):
 {inclusion_E.shape = },
 {H_S.shape = }
 {H_E.shape = },
-{accessibleFramentBornRule.shape = },
+{accessibleFragmentBornRule.shape = },
 
 {effects.shape = },
 {inclusion_E.shape = },
