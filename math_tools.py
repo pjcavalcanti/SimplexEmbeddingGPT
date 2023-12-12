@@ -86,12 +86,38 @@ def rref(B, tol=1e-8, debug=False):
 
 
 def FindStateConeFacets(S):
+    """
+    Computes the facets of the positive cone defined by the input set of states S of an accessible GPT fragment.
+
+    Args:
+    - S (np.ndarray): A numpy array representing the states in the accessible GPT fragment.
+        shape = (GPT fragment dimension, number of states)
+
+    Returns:
+    np.ndarray:
+        An array listing the facets of the positive cone defined by the input matrix S.
+        shape = (number of facets, dimension of the space spanned by states in the accessible GPT fragment)
+    """
+    
     C = cdd.Matrix(S.T, number_type="float")
     C.rep_type = cdd.RepType.GENERATOR
     return np.array(cdd.Polyhedron(C).get_inequalities())
 
 
 def FindEffectConeFacets(E):
+    """
+    Computes the facets of the positive cone defined by the input set of effects E of an accessible GPT fragment.
+
+    Args:
+    - E (np.ndarray): A numpy array representing the states in the accessible GPT fragment.
+        shape = (GPT fragment dimension, number of effects)
+
+    Returns:
+    np.ndarray:
+        An array listing the facets of the positive cone defined by the input matrix E.
+        shape = (dimension of the space spanned by effects in the accessible GPT fragment, number of facets)
+    """
+    
     C = cdd.Matrix(E.T, number_type="float")
     C.rep_type = cdd.RepType.INEQUALITY
     return np.array(cdd.Polyhedron(C).get_generators()).T
