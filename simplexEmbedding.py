@@ -189,7 +189,7 @@ Inc_S =
 
 
 if __name__ == "__main__":
-    from examples import quantum
+    from examples import example1
 
     np.set_printoptions(precision=2, suppress=True)
 
