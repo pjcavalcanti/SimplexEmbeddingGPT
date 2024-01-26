@@ -40,7 +40,7 @@ pip install numpy scipy cvxpy itertools pycddlib
 Make sure to have the required dependencies installed before running the code.
 
 ## Troubleshooting
-Installing `pycddlib` in Anaconda
+### Installing `pycddlib` in Anaconda
 
 If you are using Anaconda and encounter issues when installing `pycddlib`, you may need to install additional compilers. This is particularly relevant if you are on a Linux system. To resolve this, install `gcc_linux-64` and `gxx_linux-64` using the following commands:
 
@@ -50,6 +50,15 @@ conda install gcc_linux-64 gxx_linux-64
 
 This step ensures that the necessary C++ compilers are available in your Anaconda environment, allowing for the successful installation and functioning of `pycddlib`.
 
+### Installing `pycddlib` with pip
+
+If you encounter issues when installing `pycddlib`, that is probably because you need to install it from source. For that, you will need GMP as well as the Python development headers (see https://pycddlib.readthedocs.io/en/latest/quickstart.html#installation). On Ubuntu, this is done using the following commands:
+
+```bash
+apt-get install libgmp-dev python3-dev
+```
+
+This should allow for the successful installation and functioning of `pycddlib`.
 
 ## Usage
 
