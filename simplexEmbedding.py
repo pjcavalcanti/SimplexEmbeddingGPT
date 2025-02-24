@@ -33,7 +33,7 @@ def DefineAccessibleGPTFragment(statesOrEffects):
     r = len(np.unique(csr_matrix(U).indptr)) - 1
     
     inclusionMap = REF[:r, :].T
-    projectionMap = np.linalg.pinv(inclusionMap)
+    projectionMap = np.linalg.pinv(inclusionMap.T@inclusionMap)@inclusionMap.T
 
     return inclusionMap, projectionMap, projectionMap @ statesOrEffects
 
